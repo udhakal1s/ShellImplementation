@@ -1,7 +1,16 @@
+//Umesh Dhakal
+//09/01/2025
+//Shell implementation
+//Deliverable 1
+//Shell implementation in Java
+
+
+//imports
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
 
+//Job structure
 class Job {
     int jobId;
     Process process;
@@ -13,7 +22,7 @@ class Job {
         this.command = command;
     }
 }
-
+//Shellimplementation class
 public class MSCS630shellimplementation {
 
     private static Map<Integer, Job> jobs = new ConcurrentHashMap<>();
@@ -36,7 +45,9 @@ public class MSCS630shellimplementation {
             String command = tokens[0];
 
             try {
+		    //Switch 
                 switch (command) {
+			//Change directory
                     case "cd":
                         if (tokens.length < 2) {
                             System.out.println("cd: missing argument");
@@ -50,11 +61,12 @@ public class MSCS630shellimplementation {
                             }
                         }
                         break;
+			//Path of the source file
 
                     case "pwd":
                         System.out.println(currentDir);
                         break;
-
+			//Exit the shell
                     case "exit":
                         System.exit(0);
                         break;
@@ -64,12 +76,13 @@ public class MSCS630shellimplementation {
                             System.out.print(tokens[i] + " ");
                         System.out.println();
                         break;
+			//Clear the shell
 
                     case "clear":
                         System.out.print("\033[H\033[2J");
                         System.out.flush();
                         break;
-
+			//List of all the file in the directory
                     case "ls":
                         File folder = new File(currentDir);
                         String[] files = folder.list();
@@ -78,6 +91,7 @@ public class MSCS630shellimplementation {
                                 System.out.println(f);
                         }
                         break;
+			//Making the new directory
 
                     case "mkdir":
                         if (tokens.length < 2) {
@@ -88,7 +102,7 @@ public class MSCS630shellimplementation {
                                 System.out.println("mkdir: could not create directory");
                         }
                         break;
-
+			//REmoving the directory if exist
                     case "rmdir":
                         if (tokens.length < 2) {
                             System.out.println("rmdir: missing directory name");
@@ -98,6 +112,7 @@ public class MSCS630shellimplementation {
                                 System.out.println("rmdir: could not remove directory");
                         }
                         break;
+			//Creating the file
 
                     case "touch":
                         if (tokens.length < 2) {
@@ -107,6 +122,7 @@ public class MSCS630shellimplementation {
                             f.createNewFile();
                         }
                         break;
+			//Copying the existing file
 
                     case "cat":
                         if (tokens.length < 2) {
@@ -124,7 +140,7 @@ public class MSCS630shellimplementation {
                             }
                         }
                         break;
-
+			// Removing the file if exist
                     case "rm":
                         if (tokens.length < 2) {
                             System.out.println("rm: missing filename");
@@ -134,7 +150,7 @@ public class MSCS630shellimplementation {
                                 System.out.println("rm: could not delete file");
                         }
                         break;
-
+			//killing the jobs
                     case "kill":
                         if (tokens.length < 2) {
                             System.out.println("kill: missing pid");
@@ -153,7 +169,7 @@ public class MSCS630shellimplementation {
                                 System.out.println("kill: no such process");
                         }
                         break;
-
+			//Process management
                     case "jobs":
                         for (Job job : jobs.values()) {
                             String status = job.process.isAlive() ? "Running" : "Done";
